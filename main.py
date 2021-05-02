@@ -1,6 +1,7 @@
 import io
 import torch
 from torchvision import transforms
+from torchvision.transforms.transforms import Resize
 import models
 from PIL import Image
 from flask import Flask, render_template, request
@@ -8,7 +9,7 @@ from flask import Flask, render_template, request
 app = Flask (__name__)
  
 @app.route('/')
-def hello_world():
+def index():
     return render_template('index.html')
 
 @app.route('/predict_mnist', methods=['POST'])
@@ -20,7 +21,7 @@ def predict():
         return str(result)
     
 def mnist_predict(img_bytes):
-    img = Image.open(io.BytesIO(img_bytes))
+    img = Image.open(io.BytesIO(img_bytes)).convert('L')
     input_data = mnist_transform(img)
     input_data = input_data.unsqueeze(0)
     output = LeNet5_MNIST_model(input_data)
@@ -30,7 +31,7 @@ def mnist_predict(img_bytes):
 if __name__=='__main__':
 
     ## set transform
-    mnist_transform = transforms.Compose([ transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,)) ])
+    mnist_transform = transforms.Compose([ transforms.ToTensor(), transforms.Resize((25,25)), transforms.Normalize((0.5,), (0.5,)) ])
 
     ## load model
     LeNet5_MNIST_model = models.LeNet5()
