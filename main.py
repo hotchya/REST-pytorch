@@ -31,7 +31,7 @@ def mnist_predict(img_bytes):
 if __name__=='__main__':
 
     ## set transform
-    mnist_transform = transforms.Compose([ transforms.ToTensor(), transforms.Resize((25,25)), transforms.Normalize((0.5,), (0.5,)) ])
+    mnist_transform = transforms.Compose([ transforms.ToTensor(), transforms.Resize((28,28)), transforms.Normalize((0.5,), (0.5,)) ])
 
     ## load model
     LeNet5_MNIST_model = models.LeNet5()
