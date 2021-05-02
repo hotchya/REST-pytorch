@@ -34,7 +34,7 @@ if __name__=='__main__':
 
     ## load model
     LeNet5_MNIST_model = models.LeNet5()
-    LeNet5_MNIST_model.load_state_dict(torch.load('./saved_models/LeNet5.MNIST.pth.tar')['model_state_dict'])
+    LeNet5_MNIST_model.load_state_dict(torch.load('./saved_models/LeNet5.MNIST.pth.tar',map_location=torch.device('cpu' if torch.cuda.is_available else 'cuda'))['model_state_dict'])
     LeNet5_MNIST_model.eval()
 
     ## run server
